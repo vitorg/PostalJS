@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Posta.JS</title>
+	<script type="text/javascript" src="./lib/jquery.js"></script>
+	<script type="text/javascript" src="./lib/underscore-min.js"></script>
+	<script type="text/javascript" src="./lib/postal.min.js"></script>
+	<script type="text/javascript">
+		$().ready(function() {
+
+			var channel = postal.channel();
+
+
+			// example 1 ---------------------------------------- begin
+			var ex1MessageBusName = "ex1.name.change";
+			// subscribe to 'name.change' topics
+			var subscription = channel.subscribe(ex1MessageBusName , function( data ) {
+				$( "#ex1-text1" ).html( "Name: " + data.name );
+			});
+			channel.subscribe( ex1MessageBusName, function( data ) {
+				$( "#ex1-text2" ).html( "Name: " + data.name );
+			});
+			//subscription.unsubscribe();
+
+			$('#ex1-btn').on('click', function() {
+				channel.publish( ex1MessageBusName, { name: $('input[id=ex1-name]').val() } );
+				console.log("postal message bus sent: \"" + ex1MessageBusName + "\"");
+			});
+			// example 1 ---------------------------------------- end
+
+		});
+	</script>
+</head>
+<body>
+
+	<p>example 1 ---------------------------------------- begin</p>
+	<p id="ex1-text1">Name goes here!</p>
+	<p id="ex1-text2">And name goes here!</p>
+	<input type="text" id="ex1-name">
+	<button id="ex1-btn">Submit name</button>
+
+	<p>example 2 ---------------------------------------- begin</p>
+
+</body>
+</html>
